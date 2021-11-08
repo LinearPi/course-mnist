@@ -9,9 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -61,3 +62,12 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", " 识别结果"))
         self.label_3.setStyleSheet("QLabel{background: while;}"
                                 "QLabel{color:rgba(255,255,255,80); font-size:15px;font-weight:bold; font-family:宋体;}")
+        # 添加逻辑接口
+        btn =self.pushButton
+        btn.clicked.connect(self.openImage)
+    
+    # 添加打开图片的逻辑
+    def openImage(self):
+        imgName, imgType = QFileDialog.getOpenFileName(self, "打开图片", "","*.jpg;;*.png;;ALL Files(*)")
+        jpg = QtGui.QPixmap(imgName).scaled(self.label_2.width(), self.label_2.height())
+        self.label_2.setPixmap(jpg)
